@@ -3,14 +3,26 @@ version: '3.1'
 
 services:
 
+  myapi:
+    image: laravel:1.0
+    container_name: laravel
+    ports:
+      - "8000:8000"
+    depends_on: 
+      - mydb
+
+  # SQL Service
+  # docker run -d --rm --name mysql8 -p 3306:3306 -v $(PWD)/dbdata:/var/lib/mysql mysql:8
+  # docker exec -it mysql8 mysql data
+  # y podemos ejecutar mydb.sql para crear datos
   mydb:
     image: mysql:8
     container_name: mysqlc
-#    ports:
-#      - "3306:3306"
+    ports:
+      - "3309:3306"
     environment:
       MYSQL_DATABASE: data
       MYSQL_ROOT_PASSWORD: 1234
       # MYSQL_ALLOW_EMPTY_PASSWORD: "true"
     volumes:
-      - ../appdata/dbdata:/var/lib/mysql
+      - ./dbdata:/var/lib/mysql
