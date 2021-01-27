@@ -7,7 +7,7 @@ services:
     image: laravel:1.0
     container_name: laravel
     ports:
-      - "8000:8000"
+      - 8000:8000
     depends_on: 
       - mydb
 
@@ -19,7 +19,7 @@ services:
     image: mysql:8
     container_name: mysqlc
     ports:
-      - "3309:3306"
+      - 3309:3306
     environment:
       MYSQL_DATABASE: data
       MYSQL_ROOT_PASSWORD: 1234
