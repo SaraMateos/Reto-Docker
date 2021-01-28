@@ -8,7 +8,9 @@ services:
       - 8000:8000
     depends_on: 
       - mydb
-    working_dir: /root/blog
+    volumes: 
+      - .:/app
+    working_dir: /root/api
     command: "php artisan serve --host=0.0.0.0 --port=8000"
 
   mydb:
