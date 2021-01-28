@@ -1,6 +1,4 @@
-# Use root/example as user/password credentials
 version: '3.1'
-
 services:
 
   myapi:
@@ -10,21 +8,29 @@ services:
       - 8000:8000
     depends_on: 
       - mydb
-      working_dir: /root/blog
-      command: "php artisan serve --host=0.0.0.0 --port=8000"
+    working_dir: /root/blog
+    command: "php artisan serve --host=0.0.0.0 --port=8000"
 
-  # SQL Service
-  # docker run -d --rm --name mysql8 -p 3306:3306 -v $(PWD)/dbdata:/var/lib/mysql mysql:8
-  # docker exec -it mysql8 mysql data
-  # y podemos ejecutar mydb.sql para crear datos
   mydb:
     image: mysql:8
     container_name: mysqlc
     ports:
-      - 3309:3306
+      - 3306:3306
     environment:
       MYSQL_DATABASE: data
       MYSQL_ROOT_PASSWORD: 1234
       # MYSQL_ALLOW_EMPTY_PASSWORD: "true"
     volumes:
       - ./dbdata:/var/lib/mysql
+
+  mydbadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: mydbadminc
+    ports:
+      - 8088:80
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      PMA_HOST: mydb
+      # MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    depends_on:
+      - mydb
